@@ -3,7 +3,7 @@
     <ul class="iv-list">
       <li
         v-for="(item, index) in urlList"
-        :key="item"
+        :key="index"
         :class="[currentIndex === index ? 'active' : '']"
         @click="select({ index, url: item })"
       >
