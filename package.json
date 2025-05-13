@@ -1,15 +1,13 @@
 {
-  "name": "iv-viewer-v2",
-  "scope": "IVViewerV2",
-  "version": "1.0.4",
+  "name": "@shengtaojin/iv-viewer-v2",
+  "version": "1.0.5",
   "license": "MIT",
   "main": "./dist/iv-viewer-v2.umd.js",
   "unpkg": "./dist/iv-viewer-v2.umd.js",
   "module": "./dist/iv-viewer-v2.es.js",
-  "author": "Jaylen Zeng",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zengjinlong/iv-viewer-v2/tree/main"
+    "url": "https://github.com/jinshengtao/iv-viewer-v2"
   },
   "files": [
     "dist",

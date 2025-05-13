@@ -1,4 +1,7 @@
 
+此包为iv-viewer-v2的复制版本，旨在修复一些使用过程中遇到的问题
+- 修复当文件后缀为大写时（例如.JPG）提示“无效URL”的问题
+
 # iv-viewer-v2
  简易的Vue 2 组件，用于无缝预览图片和视频，可浏览、缩放、旋转和删除。
 
@@ -10,10 +13,10 @@
 
 ```bash
 # 使用 npm
-npm install iv-viewer-v2 --save
+npm install @shengtaojin/iv-viewer-v2 --save
 
 # 使用 yarn
-yarn add iv-viewer-v2
+yarn add @shengtaojin/iv-viewer-v2
 ```
 
 ## 使用方法
@@ -25,7 +28,7 @@ yarn add iv-viewer-v2
 ```javascript
 // main.js
 import Vue from 'vue'
-import IVViewer from 'iv-viewer-v2'
+import IVViewer from '@shengtaojin/iv-viewer-v2'
 
 Vue.component('iv-viewer', IVViewer)
 
@@ -52,7 +55,7 @@ new Vue({
 </template>
 
 <script>
-import IVViewer from 'iv-viewer-v2'
+import IVViewer from '@shengtaojin/iv-viewer-v2'
 
 export default {
   components: {
@@ -85,21 +88,21 @@ export default {
 
 ## 属性
 
-| 属性名称      | 类型        | 默认值                          | 描述                                                                                     |
-| ------------- | ----------- | ------------------------------- | ---------------------------------------------------------------------------------------- |
-| `urlList`     | `Array`     | `[]`                            | 要显示的媒体 URL 数组。支持图片和视频 URL。                                               |
-| `currentIndex`| `Number`    | `0`                             | 查看器打开时初始显示的媒体索引。                                                           |
-| `imageTypes`  | `Array`     | `['jpg', 'png', 'jpeg']`        | 自定义查看器识别的图片文件扩展名列表。                                                     |
-| `videoTypes`  | `Array`     | `['mp4']`                       | 自定义查看器识别的视频文件扩展名列表。                                                     |
-| `visible`     | `Boolean`   | `false`                         | 控制查看器的可见性。可与 `.sync` 修饰符一起使用，实现双向绑定。                            |
-| `readonly`    | `Boolean`   | `false`                         | 设置为 `true` 时，禁用删除                                        |
+| 属性名称       | 类型      | 默认值                   | 描述                                                            |
+| -------------- | --------- | ------------------------ | --------------------------------------------------------------- |
+| `urlList`      | `Array`   | `[]`                     | 要显示的媒体 URL 数组。支持图片和视频 URL。                     |
+| `currentIndex` | `Number`  | `0`                      | 查看器打开时初始显示的媒体索引。                                |
+| `imageTypes`   | `Array`   | `['jpg', 'png', 'jpeg']` | 自定义查看器识别的图片文件扩展名列表。                          |
+| `videoTypes`   | `Array`   | `['mp4']`                | 自定义查看器识别的视频文件扩展名列表。                          |
+| `visible`      | `Boolean` | `false`                  | 控制查看器的可见性。可与 `.sync` 修饰符一起使用，实现双向绑定。 |
+| `readonly`     | `Boolean` | `false`                  | 设置为 `true` 时，禁用删除                                      |
 
 ## 事件
 
-| 事件名称 | 负载                                       | 描述                                                 |
-| -------- | ------------------------------------------ | ---------------------------------------------------- |
-| `close`  | `() => void`                               | 当查看器关闭时触发。                                 |
-| `open`  | `() => void`                               | 当查看器打开时触发。                                 |
+| 事件名称 | 负载                                              | 描述                                                                    |
+| -------- | ------------------------------------------------- | ----------------------------------------------------------------------- |
+| `close`  | `() => void`                                      | 当查看器关闭时触发。                                                    |
+| `open`   | `() => void`                                      | 当查看器打开时触发。                                                    |
 | `delete` | `{ index: Number, url: String, fileList: Array }` | index:当前删除索引，url：当前删除的文件路径，fileList：删除后的文件列表 |
 
 ## 示例
@@ -162,7 +165,6 @@ export default {
 }
 </style>
 ```
-
 
 ## 许可证
 

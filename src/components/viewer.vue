@@ -229,7 +229,7 @@ export default {
           new Set(this.defaultImgTypes.concat(imagesTypes))
         )
         const type = getFileExtension(url)
-        return types.includes(type)
+        return types.includes(type.toLowerCase())
       } else {
         return false
       }
@@ -241,7 +241,7 @@ export default {
           new Set(this.defaultVideoTypes.concat(videoTypes))
         )
         const type = getFileExtension(url)
-        return types.includes(type)
+        return types.includes(type.toLowerCase())
       } else {
         return false
       }
