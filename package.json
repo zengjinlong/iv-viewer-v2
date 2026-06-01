@@ -9,7 +9,7 @@
   "author": "Jaylen Zeng",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zengjinlong/iv-viewer-v2/tree/main"
+    "url": "git+https://github.com/zengjinlong/iv-viewer-v2.git#main"
   },
   "files": [
     "dist",
