@@ -3,7 +3,7 @@
     <ul class="iv-list">
       <li
         v-for="(item, index) in urlList"
-        :key="item"
+        :key="`${item}-${index}`"
         :class="[currentIndex === index ? 'active' : '']"
         @click="select({ index, url: item })"
       >
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { getFileExtension } from '../utils'
+import { isImageFile, isVideoFile } from '../utils'
 export default {
   name: 'NavBar',
   components: {},
@@ -66,39 +66,21 @@ export default {
 
   methods: {
     loadImg(index) {
-      if (this.$refs[`img-${index}`]) {
-        const width = this.$refs[`img-${index}`][0].width
-        console.log('width', width)
-        this.$refs[`img-${index}`][0].style.transform =
-          `translateX(-${(width - 30) / 2}px)`
-      }
+      const ref = this.$refs[`img-${index}`]
+      const img = Array.isArray(ref) ? ref[0] : ref
+      if (!img) return
+
+      const offset = Math.max((img.width - 30) / 2, 0)
+      img.style.transform = `translateX(-${offset}px)`
     },
     select(data) {
       this.$emit('select', data)
     },
     isImg(url) {
-      if (url) {
-        const imagesTypes = this.imageTypes.map((item) => item.toLowerCase())
-        const types = Array.from(
-          new Set(this.defaultImgTypes.concat(imagesTypes))
-        )
-        const type = getFileExtension(url)
-        return types.includes(type)
-      } else {
-        return false
-      }
+      return isImageFile(url, this.imageTypes, this.defaultImgTypes)
     },
     isVideo(url) {
-      if (url) {
-        const videoTypes = this.videoTypes.map((item) => item.toLowerCase())
-        const types = Array.from(
-          new Set(this.defaultVideoTypes.concat(videoTypes))
-        )
-        const type = getFileExtension(url)
-        return types.includes(type)
-      } else {
-        return false
-      }
+      return isVideoFile(url, this.videoTypes, this.defaultVideoTypes)
     },
   },
 }

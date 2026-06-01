@@ -6,7 +6,7 @@
 
 ## 安装
 
-您可以通过 npm 或 yarn 安装 iv-viewer-v2：
+您可以通过 npm、yarn 或 pnpm 安装 iv-viewer-v2：
 
 ```bash
 # 使用 npm
@@ -14,6 +14,9 @@ npm install iv-viewer-v2 --save
 
 # 使用 yarn
 yarn add iv-viewer-v2
+
+# 使用 pnpm
+pnpm add iv-viewer-v2
 ```
 
 ## 使用方法
@@ -42,9 +45,9 @@ new Vue({
   <div>
     <button @click="showViewer = true">打开查看器</button>
     <iv-viewer
-      :urlList="mediaList"
+      :url-list="mediaList"
       :visible.sync="showViewer"
-      :currentIndex="0"
+      :current-index="0"
       @close="handleClose"
       @delete="handleDelete"
     ></iv-viewer>
@@ -89,10 +92,11 @@ export default {
 | ------------- | ----------- | ------------------------------- | ---------------------------------------------------------------------------------------- |
 | `urlList`     | `Array`     | `[]`                            | 要显示的媒体 URL 数组。支持图片和视频 URL。                                               |
 | `currentIndex`| `Number`    | `0`                             | 查看器打开时初始显示的媒体索引。                                                           |
-| `imageTypes`  | `Array`     | `['jpg', 'png', 'jpeg']`        | 自定义查看器识别的图片文件扩展名列表。                                                     |
-| `videoTypes`  | `Array`     | `['mp4']`                       | 自定义查看器识别的视频文件扩展名列表。                                                     |
-| `visible`     | `Boolean`   | `false`                         | 控制查看器的可见性。可与 `.sync` 修饰符一起使用，实现双向绑定。                            |
-| `readonly`    | `Boolean`   | `false`                         | 设置为 `true` 时，禁用删除                                        |
+| `imageTypes`  | `Array`     | `[]`                            | 自定义图片扩展名，会与内置 `jpg`、`png`、`jpeg` 合并识别。                                  |
+| `videoTypes`  | `Array`     | `[]`                            | 自定义视频扩展名，会与内置 `mp4` 合并识别。                                                 |
+| `visible`     | `Boolean`   | `false`                         | 控制查看器的可见性。可与 `.sync` 修饰符一起使用，组件关闭时会触发 `update:visible`。          |
+| `readonly`    | `Boolean`   | `false`                         | 设置为 `true` 时，禁用删除。                                                               |
+| `zIndex`      | `Number`    | `10000`                         | 查看器遮罩、内容和控制按钮的基础层级。                                                       |
 
 ## 事件
 
@@ -100,7 +104,8 @@ export default {
 | -------- | ------------------------------------------ | ---------------------------------------------------- |
 | `close`  | `() => void`                               | 当查看器关闭时触发。                                 |
 | `open`  | `() => void`                               | 当查看器打开时触发。                                 |
-| `delete` | `{ index: Number, url: String, fileList: Array }` | index:当前删除索引，url：当前删除的文件路径，fileList：删除后的文件列表 |
+| `update:visible` | `(visible: Boolean) => void`        | 当组件内部请求显示状态变化时触发，支持 `:visible.sync`。 |
+| `delete` | `{ index: Number, url: String, fileList: Array }` | index：当前删除索引，url：当前删除的文件路径，fileList：按索引删除后的文件列表 |
 
 ## 示例
 
@@ -110,9 +115,9 @@ export default {
     <h1>iv-viewer 示例</h1>
     <button @click="openViewer">打开媒体查看器</button>
     <iv-viewer
-      :urlList="mediaFiles"
+      :url-list="mediaFiles"
       :visible.sync="isViewerVisible"
-      :currentIndex="0"
+      :current-index="0"
       @close="onViewerClose"
       @open="onViewerOpen"
       @delete="onMediaDelete"
@@ -163,6 +168,24 @@ export default {
 </style>
 ```
 
+## 开发
+
+```bash
+# 安装依赖
+pnpm install
+
+# 运行示例
+pnpm run dev
+
+# 运行单元测试
+pnpm run test
+
+# 运行 lint
+pnpm run lint
+
+# 构建组件库
+pnpm run build
+```
 
 ## 许可证
 

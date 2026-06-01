@@ -91,7 +91,13 @@
 </template>
 
 <script lang="ts">
-import { getFileExtension } from '../utils'
+import {
+  DEFAULT_IMAGE_TYPES,
+  DEFAULT_VIDEO_TYPES,
+  isImageFile,
+  isVideoFile,
+  removeByIndex,
+} from '../utils'
 import NavBar from './nav-bar.vue'
 export default {
   name: 'IVViewer',
@@ -132,8 +138,9 @@ export default {
     return {
       loading: true,
       index: 0,
-      defaultImgTypes: ['jpg', 'png', 'jpeg'],
-      defaultVideoTypes: ['mp4'],
+      defaultImgTypes: DEFAULT_IMAGE_TYPES,
+      defaultVideoTypes: DEFAULT_VIDEO_TYPES,
+      closingFromViewer: false,
       transform: {
         scale: 1,
         deg: 0,
@@ -165,8 +172,11 @@ export default {
     },
     visible(val) {
       if (val) {
+        this.closingFromViewer = false
         this.$emit('open')
-      } else {
+      } else if (this.closingFromViewer) {
+        this.closingFromViewer = false
+      } else if (!this.closingFromViewer) {
         this.$emit('close')
       }
     },
@@ -204,16 +214,19 @@ export default {
       this.index = data.index
     },
     maskClick() {
-      this.$emit('close')
+      this.close()
     },
     close() {
+      this.closingFromViewer = true
+      this.$emit('update:visible', false)
       this.$emit('close')
     },
     deleteFile() {
-      const fileList = this.urlList.filter((item) => this.currentFile !== item)
+      const deletedUrl = this.currentFile
+      const fileList = removeByIndex(this.urlList, this.index)
       this.$emit('delete', {
         index: this.index,
-        url: this.currentFile,
+        url: deletedUrl,
         fileList,
       })
       if (this.index > 0) {
@@ -223,28 +236,10 @@ export default {
       }
     },
     isImg(url) {
-      if (url) {
-        const imagesTypes = this.imageTypes.map((item) => item.toLowerCase())
-        const types = Array.from(
-          new Set(this.defaultImgTypes.concat(imagesTypes))
-        )
-        const type = getFileExtension(url)
-        return types.includes(type)
-      } else {
-        return false
-      }
+      return isImageFile(url, this.imageTypes, this.defaultImgTypes)
     },
     isVideo(url) {
-      if (url) {
-        const videoTypes = this.videoTypes.map((item) => item.toLowerCase())
-        const types = Array.from(
-          new Set(this.defaultVideoTypes.concat(videoTypes))
-        )
-        const type = getFileExtension(url)
-        return types.includes(type)
-      } else {
-        return false
-      }
+      return isVideoFile(url, this.videoTypes, this.defaultVideoTypes)
     },
     reset() {
       this.transform = {
