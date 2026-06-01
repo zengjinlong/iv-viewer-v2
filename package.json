@@ -1,7 +1,7 @@
 {
   "name": "iv-viewer-v2",
   "scope": "IVViewerV2",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "license": "MIT",
   "main": "./dist/iv-viewer-v2.umd.js",
   "unpkg": "./dist/iv-viewer-v2.umd.js",
